@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Your Resume</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+    <script>
+      function displayData() {
+        // Retrieve data from sessionStorage and display it
+        document.getElementById("displayFirst").textContent = sessionStorage.getItem("first");
+        document.getElementById("displayMiddle").textContent = sessionStorage.getItem("middle");
+        document.getElementById("displaySurname").textContent = sessionStorage.getItem("surname");
+        document.getElementById("displayEmail").textContent = sessionStorage.getItem("email");
+        document.getElementById("displayNumber").textContent = sessionStorage.getItem("number");
+        document.getElementById("displayLinkedIn").textContent = sessionStorage.getItem("linkedin");
+        document.getElementById("displayGitHub").textContent = sessionStorage.getItem("github");
+        document.getElementById("displayLeetCode").textContent = sessionStorage.getItem("leetcode");
+
+        // Display profile picture if available
+        const photoData = sessionStorage.getItem("photo");
+        if (photoData) {
+          document.getElementById("profilePhoto").src = photoData;
+        }
+      }
+
+      function downloadPDF() {
+        // Capture the content of the resume section
+        const element = document.getElementById("resumeContent");
+        
+        // Use html2pdf function to convert to PDF and download
+        html2pdf()
+          .from(element)
+          .set({
+            margin: 1,
+            filename: 'Resume.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+          })
+          .save();
+      }
+      window.onload = displayData;
+    </script>
+  </head>
+  <body>
+    <div class="box" id="resumeContent">
+      <h1>Your Resume</h1>
+
+      <!-- Display Profile Picture -->
+      <img id="profilePhoto" alt="Profile Picture" style="width: 150px; height: 150px; border-radius: 50%;" />
+
+      <p><strong>First Name:</strong> <span id="displayFirst"></span></p>
+      <p><strong>Middle Name:</strong> <span id="displayMiddle"></span></p>
+      <p><strong>Surname:</strong> <span id="displaySurname"></span></p>
+      <p><strong>Email:</strong> <span id="displayEmail"></span></p>
+      <p><strong>Phone:</strong> <span id="displayNumber"></span></p>
+      <p><strong>LinkedIn Profile:</strong> <span id="displayLinkedIn"></span></p>
+      <p><strong>GitHub Profile:</strong> <span id="displayGitHub"></span></p>
+      <p><strong>LeetCode Profile:</strong> <span id="displayLeetCode"></span></p>
+    </div>
+
+    <!-- Download Button -->
+    <button onclick="downloadPDF()">Download as PDF</button>
+  </body>
+</html>
+
+

@@ -1,11 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resume Builder</title>
+    <link rel="stylesheet" href="style.css" />
+    <script>
+      function encodeImageFileAsURL() {
+        const file = document.getElementById("photo").files[0];
+        const reader = new FileReader();
+        
+        reader.onloadend = function() {
+          sessionStorage.setItem("photo", reader.result);
+        };
+        
+        if (file) {
+          reader.readAsDataURL(file);
+        }
+      }
+
+      function saveFormData() {
+        // Get form values and save to sessionStorage
+        sessionStorage.setItem("first", document.getElementById("first").value);
+        sessionStorage.setItem("middle", document.getElementById("middle").value);
+        sessionStorage.setItem("surname", document.getElementById("surname").value);
+        sessionStorage.setItem("email", document.getElementById("email").value);
+        sessionStorage.setItem("number", document.getElementById("number").value);
+        sessionStorage.setItem("linkedin", document.getElementById("linkedin").value);
+        sessionStorage.setItem("github", document.getElementById("github").value);
+        sessionStorage.setItem("leetcode", document.getElementById("leetcode").value);
+
+        // Redirect to resume.html
+        window.location.href = "resume.html";
+      }
+    </script>
+  </head>
+  <body>
+    <div class="box">
+      <h1 class="abc">Resume Builder</h1>
+      <form onsubmit="saveFormData(); return false;">
+        <label for="first">Enter your First Name:</label>
+        <input type="text" name="first" id="first" required />
+
+        <label for="middle">Enter your Middle Name:</label>
+        <input type="text" name="middle" id="middle" />
+
+        <label for="surname">Enter your Surname:</label>
+        <input type="text" name="surname" id="surname" required />
+
+        <label for="email">Enter your Email:</label>
+        <input type="email" name="email" id="email" required />
+
+        <label for="number">Enter your Phone:</label>
+        <input type="number" name="number" id="number" required />
+
+        <label for="linkedin">LinkedIn Profile:</label>
+        <input type="text" name="linkedin" id="linkedin" required />
+
+        <label for="github">GitHub Profile:</label>
+        <input type="text" name="github" id="github" required />
+
+        <label for="leetcode">LeetCode Profile:</label>
+        <input type="text" name="leetcode" id="leetcode" required />
+
+        <!-- Image Upload -->
+        <label for="photo">Upload your Profile Picture:</label>
+        <input type="file" id="photo" accept="image/*" onchange="encodeImageFileAsURL()" required />
+
+        <button type="submit">Generate Resume</button>
+      </form>
+    </div>
+  </body>
 </html>
